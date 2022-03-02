@@ -11,10 +11,19 @@ import java.util.*;
 abstract class GameCharacter {
     enum CharacterClasses {
         WARRIOR {
+            public String asString(){
+                return "Warrior";
+            }
         },
         HEALER {
+            public String asString(){
+                return "Healer";
+            }
         },
         ROGUE {
+            public String asString(){
+                return "Rogue";
+            }
         };
         public abstract String asString();
     }
