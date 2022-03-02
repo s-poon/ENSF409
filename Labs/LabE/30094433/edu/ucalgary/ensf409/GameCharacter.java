@@ -28,6 +28,7 @@ abstract class GameCharacter {
         public abstract String asString();
     }
 
+/* Member Variables*/
     static TreeSet<Integer> attackPriorities = new TreeSet<Integer>();
     protected String characterName;
     protected final CharacterClasses CHARACTER_CLASS;
@@ -35,6 +36,7 @@ abstract class GameCharacter {
     protected final int ATTACK_DAMAGE;
     protected int lifeforce = 100;
 
+    /* Setters and Getters */
     public String getCharacterName() { return this.characterName; }
     public void setCharacterName(String name) { this.characterName = name; }
     public void setLifeforce(int points) { this.lifeforce = points; }
@@ -58,7 +60,16 @@ abstract class GameCharacter {
         }
         return CharacterClasses.ROGUE;
     }
+
+    private CharacterClasses validateAndRecordAttackPriority(int priority) throws IllegalArgumentException{
+        if(!attackPriorities.add(priority)){
+            throw new IllegalArgumentException();
+        }
+
+        return CharacterClasses.WARRIOR;
+    }
     
+    /* Constructors */
     public GameCharacter(String characterName, String characterClass, int attackPriority, int attackDamage) throws IllegalArgumentException {
         this.characterName = characterName;
         this.CHARACTER_CLASS = getValidCharacterClass(characterClass);
@@ -66,4 +77,7 @@ abstract class GameCharacter {
         this.ATTACK_PRIORITY = attackPriority; 
         this.ATTACK_DAMAGE = attackDamage; 
     }
+
+    
+           
 }

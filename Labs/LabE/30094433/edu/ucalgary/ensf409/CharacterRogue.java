@@ -6,7 +6,7 @@ public class CharacterRogue extends GameCharacter{
     private String weapon = "knife";
 
     /*Constructors*/
-    CharacterRogue(String characterName, int attackPriority){
+    CharacterRogue(String characterName, int attackPriority) {
         super(characterName, "rogue", attackPriority, 10);
     }
 
@@ -20,6 +20,6 @@ public class CharacterRogue extends GameCharacter{
     /*Methods*/
     @Override
     public String talk(String message){
-        return "...(" + message + ")...";
+        return "....(" + message + ")....";
     }
 }

@@ -9,11 +9,13 @@ package edu.ucalgary.ensf409;
 import java.util.*;
 
 class Duel {
+    /*Member Variables*/
     private GameCharacter player1;
     private GameCharacter player2;
     private ArrayList<String> fightOutcomeLog = new ArrayList <String>();
     private boolean fightOutcomeDetermined = false;
 
+    /*Constructors*/
     public Duel(GameCharacter one, GameCharacter two) {
         if (one.ATTACK_PRIORITY > two.ATTACK_PRIORITY) {
             this.player1 = one;
