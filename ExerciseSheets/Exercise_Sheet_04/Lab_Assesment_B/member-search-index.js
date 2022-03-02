@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"<Unnamed>","c":"SimpleArrays","l":"arrayConcat()"},{"p":"<Unnamed>","c":"SimpleArrays","l":"arrayConcat(int)"},{"p":"<Unnamed>","c":"SimpleArrays","l":"arrayCrop(int, int)","url":"arrayCrop(int,int)"}]
