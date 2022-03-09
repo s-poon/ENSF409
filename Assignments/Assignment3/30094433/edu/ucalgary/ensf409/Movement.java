@@ -59,7 +59,7 @@ public class Movement implements Cloneable, FormattedOutput{
     // Member Variables
     private String action;
     private String direction;
-    private final static String REGEX = "\"([A-Z]+)-([A-Z]{1, 2})";
+    private final static String REGEX = "\"([A-Z]+)-([A-Z]{1,2})";
     private final static Pattern PATTERN = Pattern.compile(REGEX);
 
     // Constructor
