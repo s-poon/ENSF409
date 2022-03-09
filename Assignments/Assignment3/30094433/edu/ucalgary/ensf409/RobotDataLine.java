@@ -17,7 +17,7 @@ public class RobotDataLine extends Movement{
 
     // Constructor
     RobotDataLine(String line) throws IllegalArgumentException{
-
+        super(line);
     }
 
     // Getters

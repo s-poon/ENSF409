@@ -9,12 +9,16 @@ public class RobotDataRecord extends RobotDataLine{
 
     // Constructor
     RobotDataRecord(String[] array){
-        this.log.add(0, array);
+        super(array[0]);
+        for(int i = 0; i < array.length; i ++){
+            RobotDataLine temp = new RobotDataLine(array[i]);
+            log.add(i, temp);
+        }
     }
 
     // Getters
     public RobotDataLine getLine(int index){
-        return this.log[i];
+        return this.log.get(index);
     }
 
     public ArrayList<RobotDataLine> getDataRecord(){
