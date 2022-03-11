@@ -30,14 +30,14 @@ public class MyOutput {
             System.out.println("Action: " + mov.getAction());
             System.out.println("Direction: "+ mov.getDirection());
 
-            // Sensor sen = dataLine1.getSensor();
-            // System.out.println("Sensor: " + sen.getSensor());
+            Sensor sen = dataLine1.getSensor();
+            System.out.println("Sensor: " + sen.getSensor());
 
             System.out.println();
             dataLine1 = dataFile.getLine(4);
             System.out.println("Log line 4: " + dataLine1.getDataLine());
             System.out.println(dataLine1.getMovement().getFormatted());  //Direction abbreviation should be expanded to the full spelling
-            // System.out.println(dataLine1.getSensor().getFormatted());
+            System.out.println(dataLine1.getSensor().getFormatted());
 
             //Test cloning: correct deep copies should equate to false
             //Remember to clone each object that is contained within another object
@@ -48,7 +48,7 @@ public class MyOutput {
             System.out.println(dataFileCopy.getDataRecord() == dataFile.getDataRecord());
             System.out.println(dataFileCopy.getLine(0) == dataFile.getLine(0));            
             System.out.println(dataFileCopy.getLine(0).getMovement() == dataFile.getLine(0).getMovement());
-            // System.out.println(dataFileCopy.getLine(0).getSensor() == dataFile.getLine(0).getSensor());
+            System.out.println(dataFileCopy.getLine(0).getSensor() == dataFile.getLine(0).getSensor());
             
             //Example of testing invalid input- modify the data as needed to try various invalid scenarios
             //This code should cause an IllegalArgumentException to be thrown, or you can use try/catch statements to test various scenarios.

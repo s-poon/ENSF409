@@ -1,7 +1,7 @@
 package edu.ucalgary.ensf409;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeParseException;
 import java.util.regex.*;
 
 public class RobotDataLine extends Movement{
@@ -18,12 +18,28 @@ public class RobotDataLine extends Movement{
     // Constructor
     RobotDataLine(String line) throws IllegalArgumentException{
         super(line);
+        Matcher robot = ROBOT_PATTERN.matcher(line);
+        Matcher thisDate = DATE_PATTERN.matcher(line);
+        if(robot.find()){
+            robotID = robot.group(0);
+        } else{
+            // throw new IllegalArgumentException();
+        }
+        if(thisDate.find()){
+            String testDate = thisDate.group(0);
+            try {
+                date.parse(testDate);
+            } catch (DateTimeParseException e) {
+                // throw new IllegalArgumentException();
+            }
+        }
+
     }
 
     // Getters
     public String getRobotID(){ return this.robotID; }
     public String getDataLine(){ return this.dataLine; }
-    public Sensor getSenor(){ return this.senor; }
+    public Sensor getSensor(){ return this.senor; }
     public Movement getMovement(){ return this.getMovement(); }
     public LocalDate getDate(){ return this.date; }
 

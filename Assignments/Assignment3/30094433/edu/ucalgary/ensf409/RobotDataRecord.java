@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class RobotDataRecord extends RobotDataLine{
     // Member variables
-    private ArrayList<RobotDataLine> log;
+    private ArrayList<RobotDataLine> log = new ArrayList<>();
 
     // Constructor
     RobotDataRecord(String[] array){
