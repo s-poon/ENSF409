@@ -1,5 +1,6 @@
 package edu.ucalgary.ensf409;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // import javax.naming.ldap.SortResponseControl;
@@ -12,7 +13,11 @@ public class Sensor implements Cloneable, FormattedOutput{
 
     // Constructor
     Sensor(String sensor) throws IllegalArgumentException{
-        this.sensor = sensor;
+        Matcher thisSensor = PATTERN.matcher(sensor);
+        if(!thisSensor.find())
+            throw new IllegalArgumentException();
+        this.sensor = thisSensor.group(0);
+        this.sensor = this.sensor.replaceAll("[\\(\\)]", "");
     }
 
     // Getters
@@ -20,10 +25,11 @@ public class Sensor implements Cloneable, FormattedOutput{
 
     // Methods
     public Object clone() throws CloneNotSupportedException{
-        return super.clone();
+        Sensor newS = (Sensor)super.clone();
+        return newS;
     }
     @Override
     public String getFormatted(){
-        return new String();
+        return "Sensor: " + this.sensor;
     }
 }

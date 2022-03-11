@@ -16,7 +16,7 @@ public class Movement implements Cloneable, FormattedOutput{
     enum Directions{
         E{
             public String toString(){
-                return "E";
+                return "East";
             }
         },
         N{
@@ -59,11 +59,20 @@ public class Movement implements Cloneable, FormattedOutput{
     // Member Variables
     private String action;
     private String direction;
-    private final static String REGEX = "\"([A-Z]+)-([A-Z]{1,2})";
+    private final static String REGEX = "\"([A-Z]+)\\s-\\s([A-Z]{1,2})";
     private final static Pattern PATTERN = Pattern.compile(REGEX);
 
     // Constructor
     Movement(String movement) throws IllegalArgumentException{
+        String[] rawData = new String[2];
+        Matcher move = PATTERN.matcher(movement);
+        if(!move.find()){
+            System.out.println("...");
+            throw new IllegalArgumentException();
+        }
+        rawData = move.group(0).split("-");
+        action = rawData[0].replaceAll("\"", "").strip();
+        direction = rawData[1].strip();
     }
 
     //Getters
@@ -73,11 +82,13 @@ public class Movement implements Cloneable, FormattedOutput{
     // Methods 
     @Override
     public String getFormatted(){
-        return new String();
+        return "Action: " + this.action + ", Direction: " + this.direction;
     }
 
     public Object clone() throws CloneNotSupportedException{
-        return super.clone();
+        Movement newM = (Movement)super.clone();
+        return newM;
+        // return super.clone();
     }
 
     

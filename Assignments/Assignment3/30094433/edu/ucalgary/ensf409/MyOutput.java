@@ -69,7 +69,7 @@ public class MyOutput {
 			"Robot 405A - - [10/04/2022] \"RIGHT - E (light)\"",
 			"Robot 561C - - [21/04/2022] \"LEFT - SE (ultrasonic)\"",
 			"Robot 227D - - [25/04/2022] \"FORWARD - N (lidar)\""};
-                return dataLog;
+        return dataLog;
 	}
 
 	public static String[] getBadData() {
@@ -77,7 +77,7 @@ public class MyOutput {
 		String[] dataLog = {
 			"Robot 890A - - [90/03/2022] \"START - NE (ultra$onic)\"",  //Contains invalid day and invalid sensor
 			"Robot 890AZ - - [02/03/2022] \"BACKWARDS - NS (infrared)\""};  //Contains invalid id and invalid movement
-                return dataLog;
+        return dataLog;
 	}
 
 }
