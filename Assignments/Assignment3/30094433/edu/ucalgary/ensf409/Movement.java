@@ -21,37 +21,37 @@ public class Movement implements Cloneable, FormattedOutput{
         },
         N{
             public String toString(){
-                return "N";
+                return "North";
             } 
         },
         NE{
             public String toString(){
-                return "NE";
+                return "Norteast";
             }
         },
         NW{
             public String toString(){
-                return "NW";
+                return "Northwest";
             }
         },
         S{
             public String toString(){
-                return "S";
+                return "South";
             }
         },
         SE{
             public String toString(){
-                return "SE";
+                return "Southeast";
             }
         },
         SW{
             public String toString(){
-                return "SW";
+                return "Southwest";
             }
         },
         W{
             public String toString(){
-                return "W";
+                return "West";
             }
         }
     }
@@ -82,15 +82,44 @@ public class Movement implements Cloneable, FormattedOutput{
     // Methods 
     @Override
     public String getFormatted(){
-        return "Action: " + this.action + ", Direction: " + this.direction;
+        return "Action: " + this.action + ", Direction: " + directionToEnum(this.direction);
     }
 
     public Object clone() throws CloneNotSupportedException{
         Movement newM = (Movement)super.clone();
+        newM.action = this.action;
+        newM.direction = this.direction;
         return newM;
-        // return super.clone();
     }
 
-    
-
+    public static String directionToEnum(String input){
+        String output = new String();
+        switch(input){
+            case "N":
+                output = Directions.N.toString();
+                break;
+            case "NE":
+                output = Directions.NE.toString();
+                break;
+            case "E":
+                output = Directions.E.toString();
+                break;
+            case "SE":
+                output = Directions.SE.toString();
+                break;
+            case "S":
+                output = Directions.S.toString();
+                break;
+            case "SW":
+                output = Directions.SW.toString();
+                break;
+            case "W":
+                output = Directions.W.toString();
+                break;
+            case "NW":
+                output = Directions.NW.toString();
+                break;
+        }
+        return output;
+    }
 }
