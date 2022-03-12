@@ -85,6 +85,7 @@ public class Movement implements Cloneable, FormattedOutput{
         return "Action: " + this.action + ", Direction: " + directionToEnum(this.direction);
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException{
         Movement newM = (Movement)super.clone();
         newM.action = this.action;

@@ -3,7 +3,6 @@ package edu.ucalgary.ensf409;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// import javax.naming.ldap.SortResponseControl;
 
 public class Sensor implements Cloneable, FormattedOutput{
     // Member Variables
@@ -26,6 +25,7 @@ public class Sensor implements Cloneable, FormattedOutput{
     // Methods
     public Object clone() throws CloneNotSupportedException{
         Sensor newS = (Sensor)super.clone();
+        newS.sensor = this.sensor;
         return newS;
     }
     @Override

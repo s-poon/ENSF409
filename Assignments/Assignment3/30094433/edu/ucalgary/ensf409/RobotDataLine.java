@@ -55,8 +55,10 @@ public class RobotDataLine extends Movement{
     public LocalDate getDate(){ return this.date; }
 
     // Methods
+    @Override
     public Object clone() throws CloneNotSupportedException{
         RobotDataLine newR = (RobotDataLine)super.clone();
+        
         return newR;
     }
 
