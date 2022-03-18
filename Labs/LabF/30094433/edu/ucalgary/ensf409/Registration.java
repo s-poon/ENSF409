@@ -74,19 +74,28 @@ public class Registration{
         return names.toString();
     }
     
-    
-    public void insertNewCompetitor(String id, String lName, String fName, int age, String instrument, String teacherID){
+    public void insertNewCompetitor(
+            String id, 
+            String lName, 
+            String fName, 
+            int age,
+            String instrument, 
+            String teacherID
+            ){
        
         if(!validateTeacher(teacherID)){
-            throw new IllegalArgumentException("Student must have a registered teacher.");
+            throw new IllegalArgumentException(
+                "Student must have a registered teacher.");
         }
 
         if(age < 5 || age > 18){
-            throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
+            throw new IllegalArgumentException(
+                "Student must be between the ages of 5 and 18.");
         }
         
         try{
-            String query = "INSERT INTO competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO competitor (CompetitorID, LName, FName,"
+                     + " Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
             myStmt.setString(1, id);
             myStmt.setString(2, lName);
@@ -160,7 +169,8 @@ public class Registration{
 		// You should reset the database before each test run of your code.
 
         //Use the following account information: Username = student, Password = ensf
-        Registration myJDBC = new Registration("jdbc:mysql://localhost/competition","student","ensf");
+        Registration myJDBC = new Registration(
+                "jdbc:mysql://localhost:3306/competition","student","ensf");
         
         //1 mark - initializeConnection method must create a connection to the database, may not take in any arguments or return any values
         // Must throw an SQLException if connection cannot be made
