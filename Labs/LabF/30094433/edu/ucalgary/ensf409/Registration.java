@@ -30,28 +30,48 @@ public class Registration{
 
 //Must create a connection to the database, no arguments, no return value    
     public void initializeConnection(){
-
-/***********ADD CODE HERE***********/                
+        try{
+            dbConnect = DriverManager.getConnection(
+                DBURL, 
+                USERNAME, 
+                PASSWORD
+            );
+        }catch(SQLException e){
+            e.printStackTrace();
+        }         
 
     }
     
-    String getDburl(){
-        return this.DBURL;
-    }
-
-    String getUsername(){
-        return this.USERNAME;
-    }
-    
-    String getPassword(){
-        return this.PASSWORD;
-    }
+    String getDburl(){ return this.DBURL; }
+    String getUsername(){ return this.USERNAME; }
+    String getPassword(){ return this.PASSWORD; }
 
     
-    public String selectAllNames(String tableName){     
+    public String selectAllNames(String tableName){                   
+        StringBuffer names = new StringBuffer();
+        try{
+            Statement myStmt = dbConnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM " + tableName);
 
-/***********ADD CODE HERE***********/                
-
+            while(results.next()){
+                System.out.println(
+                    "Print results: " + 
+                    results.getString("LName") + 
+                    ", " + 
+                    results.getString("FName")
+                );
+                names.append(
+                    results.getString("LName") + 
+                    ", " + 
+                    results.getString("FName")
+                );
+                names.append('\n');
+            }
+            myStmt.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return names.toString();
     }
     
     
@@ -64,11 +84,23 @@ public class Registration{
         if(age < 5 || age > 18){
             throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
         }
-             
+        
+        try{
+            String query = "INSERT INTO competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+            myStmt.setString(1, id);
+            myStmt.setString(2, lName);
+            myStmt.setString(3, fName);
+            myStmt.setInt(4, age);
+            myStmt.setString(5, instrument);
+            myStmt.setString(6, teacherID);
 
-/***********ADD CODE HERE***********/                
-
-
+            int rowCount = myStmt.executeUpdate();
+            System.out.println("Rows affected: " + rowCount);
+            myStmt.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }    
 
     
@@ -100,16 +132,26 @@ public class Registration{
     
  
     public void deleteCompetitor(String id){
-
-/***********ADD CODE HERE***********/                
-
-
+        try{
+            String query = "DELETE FROM competitor WHERE CompetitorID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+            myStmt.setString(1, id);
+            int rowCount = myStmt.executeUpdate();
+            System.out.println("Rows affected: " + rowCount);
+            myStmt.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }    
 
     public void close() {
-        
-/***********ADD CODE HERE***********/                
-
+        try{
+            results.close();
+            dbConnect.close();
+            System.out.println("Files were successfully closed.");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     
     public static void main(String[] args) {
