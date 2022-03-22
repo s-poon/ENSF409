@@ -1,6 +1,8 @@
 package edu.ucalgary.ensf409;
 
-public class TranslationText {
+import java.io.Serializable;
+
+public class TranslationText implements Serializable{
     // Member Variables
     private String[] months = new String[12];
     private String[] days = new String[31];
