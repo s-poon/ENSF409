@@ -26,6 +26,7 @@ public class RobotDataRecord extends RobotDataLine{
         return this.log;
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException{
         RobotDataRecord newRDL = (RobotDataRecord)super.clone();
         for(int i = 0; i < this.array.length; i ++){

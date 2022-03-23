@@ -71,13 +71,19 @@ public class Movement implements Cloneable, FormattedOutput{
             throw new IllegalArgumentException();
         }
         rawData = move.group(0).split("-");
-        action = rawData[0].replaceAll("\"", "").strip();
-        direction = rawData[1].strip();
+        this.action = rawData[0].replaceAll("\"", "").strip();
+        this.direction = rawData[1].strip();
+        this.validDir(this.action);
+
     }
 
     //Getters
     public String getAction(){ return this.action; }
     public String getDirection(){ return this.direction; }
+
+    //Setters
+    public void setAction(String action){ this.action = action; }
+    public void setDirection(String direction){ this.direction = direction; }
 
     // Methods 
     @Override
@@ -88,11 +94,29 @@ public class Movement implements Cloneable, FormattedOutput{
     @Override
     public Object clone() throws CloneNotSupportedException{
         Movement newM = (Movement)super.clone();
-        newM.action = this.action;
-        newM.direction = this.direction;
+        newM.setAction(this.action);
+        newM.setDirection(this.direction);
         return newM;
     }
 
+    public void validDir(String input){
+        switch(input){
+            case "FORWARD":
+                break;
+            case "LEFT":
+                break;
+            case "REVERSE":
+                break;
+            case "RIGHT":
+                break;
+            case "START":
+                break;
+            case "STOP":
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
     public static String directionToEnum(String input){
         String output = new String();
         switch(input){
@@ -120,6 +144,8 @@ public class Movement implements Cloneable, FormattedOutput{
             case "NW":
                 output = Directions.NW.toString();
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
         return output;
     }
