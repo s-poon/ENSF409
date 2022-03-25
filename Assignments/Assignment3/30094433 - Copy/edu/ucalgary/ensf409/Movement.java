@@ -71,56 +71,98 @@ public class Movement implements Cloneable, FormattedOutput{
             throw new IllegalArgumentException();
         }
         rawData = move.group(0).split("-");
-        action = rawData[0].replaceAll("\"", "").strip();
-        direction = rawData[1].strip();
+        this.action = rawData[0].replaceAll("\"", "").strip();
+        this.direction = rawData[1].strip();
+        this.validAction(this.action);
+        this.validDir(this.direction);
+
     }
 
     //Getters
     public String getAction(){ return this.action; }
     public String getDirection(){ return this.direction; }
 
+    //Setters
+    public void setAction(String action){ this.action = action; }
+    public void setDirection(String direction){ this.direction = direction; }
+
     // Methods 
     @Override
     public String getFormatted(){
-        return "Action: " + this.action + ", Direction: " + directionToEnum(this.direction);
+        return "Action: " + this.action + ", Direction: " + this.directionToEnum(this.direction);
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException{
         Movement newM = (Movement)super.clone();
-        newM.action = this.action;
-        newM.direction = this.direction;
+        newM.setAction(this.action);
+        newM.setDirection(this.direction);
         return newM;
     }
 
-    public static String directionToEnum(String input){
-        String output = new String();
+    public void validAction(String input)throws IllegalArgumentException{
+        switch(input){
+            case "FORWARD":
+                break;
+            case "LEFT":
+                break;
+            case "REVERSE":
+                break;
+            case "RIGHT":
+                break;
+            case "START":
+                break;
+            case "STOP":
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    public void validDir(String input)throws IllegalArgumentException{
         switch(input){
             case "N":
-                output = Directions.N.toString();
                 break;
             case "NE":
-                output = Directions.NE.toString();
                 break;
             case "E":
-                output = Directions.E.toString();
                 break;
             case "SE":
-                output = Directions.SE.toString();
                 break;
             case "S":
-                output = Directions.S.toString();
                 break;
             case "SW":
-                output = Directions.SW.toString();
                 break;
             case "W":
-                output = Directions.W.toString();
                 break;
             case "NW":
-                output = Directions.NW.toString();
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
-        return output;
+    }
+    
+    public String directionToEnum(String input) throws IllegalArgumentException{
+        switch(input){
+            case "N":
+                return Directions.N.toString();
+            case "NE":
+                return Directions.NE.toString();
+            case "E":
+                return Directions.E.toString();
+            case "SE":
+                return Directions.SE.toString();
+            case "S":
+                return Directions.S.toString();
+            case "SW":
+                return Directions.SW.toString();
+            case "W":
+                return Directions.W.toString();
+            case "NW":
+                return Directions.NW.toString();
+            default:
+                throw new IllegalArgumentException();
+                
+        }
     }
 }

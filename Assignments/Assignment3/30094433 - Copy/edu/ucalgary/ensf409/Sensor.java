@@ -23,6 +23,7 @@ public class Sensor implements Cloneable, FormattedOutput{
     public String getSensor(){ return this.sensor; }
 
     // Methods
+    @Override
     public Object clone() throws CloneNotSupportedException{
         Sensor newS = (Sensor)super.clone();
         newS.sensor = this.sensor;
