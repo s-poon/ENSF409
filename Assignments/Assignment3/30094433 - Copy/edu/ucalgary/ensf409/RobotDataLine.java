@@ -58,6 +58,7 @@ public class RobotDataLine extends Movement{
     @Override
     public Object clone() throws CloneNotSupportedException{
         RobotDataLine newR = (RobotDataLine)super.clone();
+        newR.dataLine = this.getDataLine();
         
         return newR;
     }
