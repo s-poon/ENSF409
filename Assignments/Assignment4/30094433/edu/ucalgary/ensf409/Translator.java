@@ -17,13 +17,17 @@ public class Translator{
 
 
     // Getter
-    public void getTranslation(){}
+    public TranslationText getTranslation(){ return this.translation; }
     // Setter
 
     // Methods
     public String translate(int month , int day, int year)
-                                            throws IllegalArgumentException{
-        // sdfs;
+        throws IllegalArgumentException{
+        if(month > 12 || month < 0)
+            throw new IllegalArgumentException();
+        if(day <= 0 || day > 31)
+            throw new IllegalArgumentException();
+        
 
 
 
@@ -34,7 +38,7 @@ public class Translator{
 
     }
 
-    public void importFromText(){
+    public void importFromText(String input)throws IOException{
 
     }
 
@@ -51,7 +55,6 @@ public class Translator{
         }
 
         try{
-            var txt = new String("Random text");
             String[] months = new String[12];
             String[] days = new String[31];
             String sentence = new String();
