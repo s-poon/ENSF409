@@ -49,8 +49,7 @@ public class MyOutput {
             System.out.println(dataFileCopy.getLine(0) == dataFile.getLine(0));            
             System.out.println(dataFileCopy.getLine(0).getMovement() == dataFile.getLine(0).getMovement());
             System.out.println(dataFileCopy.getLine(0).getSensor() == dataFile.getLine(0).getSensor());
-            
-            //Example of testing invalid input- modify the data as needed to try various invalid scenarios
+                //Example of testing invalid input- modify the data as needed to try various invalid scenarios
             //This code should cause an IllegalArgumentException to be thrown, or you can use try/catch statements to test various scenarios.
             System.out.println("Uncomment below to test exceptions...");
             //String[] badData = getBadData();
@@ -62,7 +61,7 @@ public class MyOutput {
 	public static String[] getSampleData() {
 
 		String[] dataLog = {
-			"Robot 890A - - [02/03/2022] \"START - NE (ultrasonic)\"",
+			"Robot 890A - - [02/03/2022] \"START - NQ (ultrasonic)\"",
 			"Robot 890A - - [02/03/2022] \"FORWARD - NE (infrared)\"",
 			"Robot 123B - - [16/03/2022] \"REVERSE - SW (lidar)\"",
 			"Robot 793B - - [29/03/2022] \"STOP - S (temperature)\"",
