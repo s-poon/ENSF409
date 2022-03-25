@@ -61,7 +61,7 @@ public class MyOutput {
 	public static String[] getSampleData() {
 
 		String[] dataLog = {
-			"Robot 890A - - [02/03/2022] \"START - NQ (ultrasonic)\"",
+			"Robot 890A - - [02/03/2022] \"START - NW (ultrasonic)\"",
 			"Robot 890A - - [02/03/2022] \"FORWARD - NE (infrared)\"",
 			"Robot 123B - - [16/03/2022] \"REVERSE - SW (lidar)\"",
 			"Robot 793B - - [29/03/2022] \"STOP - S (temperature)\"",
