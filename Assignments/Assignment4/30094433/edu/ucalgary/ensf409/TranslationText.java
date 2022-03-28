@@ -7,6 +7,7 @@ public class TranslationText implements Serializable{
     private String[] months = new String[12];
     private String[] days = new String[31];
     private String sentence = new String();
+    static final long serialVersionUID = 19;
 
     // Constructor
     TranslationText(String[] months, String[] days, String sentence){

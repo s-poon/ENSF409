@@ -3,15 +3,26 @@
 package edu.ucalgary.ensf409;
 
 import java.io.*;
+import java.util.regex.*;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Translator{
     // Memeber Variables
     TranslationText translation;
+    private final static String INPUTREGEX = "[a-z]{2}-[A-Z]{2}";
+    private static Pattern INPUTPAT = Pattern.compile(INPUTREGEX);
+    private String fileName;
 
 
     // Constructor
     Translator(String input)throws IllegalArgumentException{
-        
+        Matcher validID = INPUTPAT.matcher(input);
+        if(!validID.find()){
+            throw new IllegalArgumentException();
+        }
+        fileName = input + ".txt";
+        this.importTranslation();
     }
 
 
@@ -27,19 +38,23 @@ public class Translator{
             throw new IllegalArgumentException();
         if(day <= 0 || day > 31)
             throw new IllegalArgumentException();
-        
-
-
-
+ 
         return new String();
     }
 
     public void importTranslation(){
-
+        File file = null;
+        try{
+            file = new File("en-US.txt");
+            this.deserialize();
+        }catch(Exception e){
+            System.out.println(fileName);
+            this.importFromText();
+        }
     }
 
-    public void importFromText(String input)throws IOException{
-
+    public void importFromText()/*throws IOException*/{
+        System.out.print("sad");
     }
 
     public void serialize(){
@@ -47,7 +62,7 @@ public class Translator{
         TranslationText record = null;
 
         try{
-            output = new ObjectOutputStream(new FileOutputStream("file"));
+            output = new ObjectOutputStream(new FileOutputStream(fileName));
 
         }catch(IOException e){
             System.err.println("Error Opening File");
@@ -80,17 +95,15 @@ public class Translator{
         TranslationText record = null;
 
         try{
-            input = new ObjectInputStream(new FileInputStream("file"));
+            input = new ObjectInputStream(new FileInputStream(fileName));
         }catch(IOException e){
             System.err.println("Error Opening File");
             System.exit(1);
         }
 
         try{
-            record = (TranslationText) input.readObject();
-            
+            record = (TranslationText) input.readObject(); 
         }catch(Exception e){
-            System.err.println("Oof");
             e.printStackTrace();
         }finally{
             try{
