@@ -1,0 +1,6 @@
+@article{baltes:2020:sampling,
+      title={Sampling in software engineering research: A critical review and guidelines},
+      author={Baltes, Sebastian and Ralph, Paul},
+      booktitle={arXiv preprint arXiv:2002.07764},
+      year={2021}
+    }

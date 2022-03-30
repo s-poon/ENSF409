@@ -11,9 +11,9 @@ public class BibReader {
     private File file;
     private String contents;
     private HashMap<String, String> attributes;
-    private final static String REGEX = "([a-zA-Z]*[ ]{0,1})=[ ]{0,1}{(.*?)}";
+    private final static String REGEX = "([a-zA-Z]*[ ]{0,1})0=[ ]{0,1}{(.*?)}";
     private final static Pattern PATTERN = Pattern.compile(REGEX);
-    // Constructor
+    // Constructor0
     BibReader(File input){
         this.file = input;
     }

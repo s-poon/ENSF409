@@ -5,7 +5,6 @@ package edu.ucalgary.ensf409;
 import java.io.*;
 import java.util.regex.*;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Translator{
     // Memeber Variables
