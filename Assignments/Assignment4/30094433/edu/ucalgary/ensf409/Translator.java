@@ -12,6 +12,7 @@ public class Translator{
     private final static String INPUTREGEX = "[a-z]{2}-[A-Z]{2}";
     private static Pattern INPUTPAT = Pattern.compile(INPUTREGEX);
     private String fileName;
+    private File file;
 
 
     // Constructor
@@ -42,9 +43,9 @@ public class Translator{
     }
 
     public void importTranslation(){
-        File file = null;
+        file = null;
         try{
-            file = new File("en-US.txt");
+            file = new File(fileName);
             this.deserialize();
         }catch(Exception e){
             System.out.println(fileName);
@@ -61,10 +62,10 @@ public class Translator{
         TranslationText record = null;
 
         try{
-            output = new ObjectOutputStream(new FileOutputStream(fileName));
+            output = new ObjectOutputStream(new FileOutputStream(file));
 
         }catch(IOException e){
-            System.err.println("Error Opening File");
+            System.err.println("Error Opening File sadge");
             System.exit(1);
         }
 
@@ -96,7 +97,7 @@ public class Translator{
         try{
             input = new ObjectInputStream(new FileInputStream(fileName));
         }catch(IOException e){
-            System.err.println("Error Opening File");
+            System.err.println("Error Opening File bruh");
             System.exit(1);
         }
 

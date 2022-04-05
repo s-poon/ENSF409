@@ -5,7 +5,7 @@ public class DayMemory {
         // if(args.length < 1){
         //     throw new IllegalArgumentException();
         // }
-        Translator translate = new Translator("es-BO");
+        Translator translate = new Translator("en-US");
         
     }
 }
