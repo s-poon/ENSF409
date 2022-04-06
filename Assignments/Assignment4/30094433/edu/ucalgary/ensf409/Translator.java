@@ -2,6 +2,7 @@
 
 package edu.ucalgary.ensf409;
 
+// import java.io.;
 import java.io.*;
 import java.util.regex.*;
 
@@ -63,7 +64,6 @@ public class Translator{
 
         try{
             output = new ObjectOutputStream(new FileOutputStream(file));
-
         }catch(IOException e){
             System.err.println("Error Opening File sadge");
             System.exit(1);
