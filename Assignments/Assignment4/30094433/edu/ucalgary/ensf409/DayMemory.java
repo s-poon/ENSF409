@@ -5,7 +5,12 @@ public class DayMemory {
         // if(args.length < 1){
         //     throw new IllegalArgumentException();
         // }
-        Translator translate = new Translator("en-US");
+        try{
+            Translator translate = new Translator("es-BO");
+            System.out.println(translate.translate(2, 1, 2001));
+        }
+        catch(Exception e){}
+        
         
     }
 }

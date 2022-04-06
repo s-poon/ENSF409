@@ -2,7 +2,6 @@
 
 package edu.ucalgary.ensf409;
 
-// import java.io.;
 import java.io.*;
 import java.util.regex.*;
 
@@ -17,12 +16,15 @@ public class Translator{
 
 
     // Constructor
-    Translator(String input)throws IllegalArgumentException{
+    Translator(String input)throws 
+        IllegalArgumentException, 
+        ArgFileNotFoundException{
+            
         Matcher validID = INPUTPAT.matcher(input);
         if(!validID.find()){
             throw new IllegalArgumentException();
         }
-        fileName = input + ".txt";
+        fileName = input;
         this.importTranslation();
     }
 
@@ -39,23 +41,43 @@ public class Translator{
             throw new IllegalArgumentException();
         if(day <= 0 || day > 31)
             throw new IllegalArgumentException();
- 
-        return new String();
+        String output = String.format(
+            translation.getSentence(),
+            translation.getDay(day - 1),
+            translation.getMonth(month - 1),
+            year
+            );
+        return output;
     }
 
-    public void importTranslation(){
+    public void importTranslation()throws ArgFileNotFoundException{
         file = null;
-        try{
-            file = new File(fileName);
+        file = new File(fileName + ".ser");
+        if(file.exists())
             this.deserialize();
-        }catch(Exception e){
-            System.out.println(fileName);
+        else
             this.importFromText();
-        }
     }
 
-    public void importFromText()/*throws IOException*/{
-        System.out.print("sad");
+    public void importFromText()throws ArgFileNotFoundException{
+        file = null;
+        String[] months = new String[12];
+        String[] days = new String[31];
+        String sentence = new String();
+        try{
+            file = new File(fileName + ".txt");
+            if(!file.exists())
+                throw new ArgFileNotFoundException("Error");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            for(int i = 0; i < 12; i ++)
+                months[i] = br.readLine();
+            for(int i = 0; i < 31; i ++)
+                days[i] = br.readLine();
+            sentence = br.readLine();
+            translation = new TranslationText(months, days, sentence);
+
+        }
+        catch(IOException e){}
     }
 
     public void serialize(){
@@ -64,8 +86,10 @@ public class Translator{
 
         try{
             output = new ObjectOutputStream(new FileOutputStream(file));
-        }catch(IOException e){
-            System.err.println("Error Opening File sadge");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+            System.err.println("error opening");
             System.exit(1);
         }
 
@@ -75,44 +99,55 @@ public class Translator{
             String sentence = new String();
             record = new TranslationText(months, days, sentence);
             output.writeObject(record);
-        }catch(Exception e){
-            System.err.println("Sadge");
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
-        finally{
-            try{
-                if(output != null)
-                    output.close();
-            }catch(IOException e){
-                System.err.println("Error Closing File");
-                System.exit(1);
-            }
-        }
+        finally {
+			try {
+				if (output != null) {
+					output.close();
+				}
+			}
+			catch(IOException e) {
+				System.err.println("Error closing file.");
+				System.exit(1);
+			}
+		}
     }
+
 
     public void deserialize(){
         ObjectInputStream input = null;
         TranslationText record = null;
-
+        
         try{
-            input = new ObjectInputStream(new FileInputStream(fileName));
-        }catch(IOException e){
-            System.err.println("Error Opening File bruh");
+            input = new ObjectInputStream(new FileInputStream(file));
+        }
+        catch(IOException e){
+            System.err.println("deserialize doesn't work");
             System.exit(1);
         }
 
         try{
-            record = (TranslationText) input.readObject(); 
-        }catch(Exception e){
+            record = (TranslationText) input.readObject();
+            translation = record;
+
+        }
+        catch(Exception e){
+            System.out.println("not quite");
             e.printStackTrace();
-        }finally{
+        }
+        finally{
             try{
                 if(input != null)
                     input.close();
-            }catch(IOException e){
-                System.err.println("Error Closing File");
+            }
+            catch(IOException e){
+                System.out.println("cant close file");
                 System.exit(1);
             }
         }
     }
+    
 }
