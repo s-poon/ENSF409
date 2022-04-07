@@ -3,6 +3,7 @@
 package edu.ucalgary.ensf409;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.*;
 
 
@@ -46,7 +47,12 @@ public class Translator{
             translation.getDay(day - 1),
             translation.getMonth(month - 1),
             year
-            );
+        );
+
+        byte[] bytes = output.getBytes(StandardCharsets.UTF_8);
+        output = new String(bytes, StandardCharsets.UTF_8);
+
+
         return output;
     }
 
@@ -135,7 +141,7 @@ public class Translator{
 
         }
         catch(Exception e){
-            System.out.println("not quite");
+            System.out.println();
             e.printStackTrace();
         }
         finally{
