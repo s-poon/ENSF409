@@ -4,6 +4,7 @@ package edu.ucalgary.ensf409;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.regex.*;
 
 
@@ -38,20 +39,29 @@ public class Translator{
     // Methods
     public String translate(int month , int day, int year)
         throws IllegalArgumentException{
+        LocalDate current = LocalDate.now();
+        String output;
         if(month > 12 || month < 0)
             throw new IllegalArgumentException();
         if(day <= 0 || day > 31)
             throw new IllegalArgumentException();
-        String output = String.format(
-            translation.getSentence(),
-            translation.getDay(day - 1),
-            translation.getMonth(month - 1),
-            year
-        );
-
-        byte[] bytes = output.getBytes(StandardCharsets.UTF_8);
-        output = new String(bytes, StandardCharsets.UTF_8);
-
+        if(
+            year < current.getYear() || 
+            (year == current.getYear() && month < current.getMonthValue()) ||
+            (year == current.getYear() && month == current.getMonthValue() && day <= current.getDayOfMonth())
+        ){
+            output = String.format(
+                translation.getSentence(),
+                translation.getDay(day - 1),
+                translation.getMonth(month - 1),
+                year
+            );
+            byte[] bytes = output.getBytes(StandardCharsets.UTF_8);
+            output = new String(bytes, StandardCharsets.UTF_8);
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
 
         return output;
     }
@@ -81,7 +91,6 @@ public class Translator{
                 days[i] = br.readLine();
             sentence = br.readLine();
             translation = new TranslationText(months, days, sentence);
-
         }
         catch(IOException e){}
     }
@@ -91,23 +100,14 @@ public class Translator{
         TranslationText record = null;
 
         try{
-            output = new ObjectOutputStream(new FileOutputStream(file));
+            output = new ObjectOutputStream(new FileOutputStream(fileName + ".ser", true));
+            record = translation;
+            output.writeObject(record);
         }
         catch(IOException e){
             e.printStackTrace();
             System.err.println("error opening");
             System.exit(1);
-        }
-
-        try{
-            String[] months = new String[12];
-            String[] days = new String[31];
-            String sentence = new String();
-            record = new TranslationText(months, days, sentence);
-            output.writeObject(record);
-        }
-        catch(Exception e){
-            e.printStackTrace();
         }
         finally {
 			try {

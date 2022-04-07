@@ -1,18 +1,16 @@
 package edu.ucalgary.ensf409;
 
-import java.nio.charset.Charset;
 
 public class DayMemory {
-    public static void main(String[] args){
-        // if(args.length < 1){
-        //     throw new IllegalArgumentException();
-        // }
-        try{
-            Translator translate = new Translator("el-GR");
-            System.out.println(translate.translate(2, 1, 2001));
+    public static void main(String[] args)throws 
+            CommandArgumentNotProvidedException,
+            ArgFileNotFoundException{
+        if(args.length < 1){
+            throw new CommandArgumentNotProvidedException();
         }
-        catch(Exception e){}
+        Translator translate = new Translator(args[0]);
+        System.out.println(translate.translate(4, 9, -2022));
         
-        
+
     }
 }
