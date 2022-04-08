@@ -83,7 +83,7 @@ public class Translator{
         try{
             file = new File(fileName + ".txt");
             if(!file.exists())
-                throw new ArgFileNotFoundException("Error");
+                throw new ArgFileNotFoundException();
             BufferedReader br = new BufferedReader(new FileReader(file));
             for(int i = 0; i < 12; i ++)
                 months[i] = br.readLine();
@@ -106,7 +106,7 @@ public class Translator{
         }
         catch(IOException e){
             e.printStackTrace();
-            System.err.println("error opening");
+            System.err.println("Error opening");
             System.exit(1);
         }
         finally {
@@ -131,7 +131,7 @@ public class Translator{
             input = new ObjectInputStream(new FileInputStream(file));
         }
         catch(IOException e){
-            System.err.println("deserialize doesn't work");
+            System.err.println("Deserialize doesn't work");
             System.exit(1);
         }
 
@@ -150,7 +150,7 @@ public class Translator{
                     input.close();
             }
             catch(IOException e){
-                System.out.println("cant close file");
+                System.out.println("Cant close file");
                 System.exit(1);
             }
         }

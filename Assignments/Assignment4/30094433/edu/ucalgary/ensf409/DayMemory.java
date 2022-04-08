@@ -9,7 +9,7 @@ public class DayMemory {
             throw new CommandArgumentNotProvidedException();
         }
         Translator translate = new Translator(args[0]);
-        System.out.println(translate.translate(4, 9, -2022));
+        System.out.println(translate.translate(11, 7, 2001));
         
 
     }
