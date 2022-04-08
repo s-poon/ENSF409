@@ -513,10 +513,10 @@ public class NewFeatureTest {
         assertEquals("VisitorParking startDaysLicenceIsregistered() did not return an ordered list", expectedString, actualDates.toString());
     }
 
-    // /*
-    //  * HouseholdParking has just one resident licence. That licence is standardized.
-    //  * An exception is thrown with an invalid licence.
-    // */
+    /*
+     * HouseholdParking has just one resident licence. That licence is standardized.
+     * An exception is thrown with an invalid licence.
+    */
     // @Test
     // public void testOnlyOneResidentLicence() {
     //     // Test data - values may be changed in actual tests
