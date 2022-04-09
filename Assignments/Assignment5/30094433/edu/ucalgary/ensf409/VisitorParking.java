@@ -2,7 +2,10 @@ package edu.ucalgary.ensf409;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.regex.*;
 
 import javax.lang.model.util.ElementScanner6;
@@ -10,7 +13,7 @@ import javax.lang.model.util.ElementScanner6;
 
 public class VisitorParking {
     // Member Variables
-    private static final String REGEX = "[a-zA-Z0-9]{1,7}";
+    private static final String REGEX = "[a-zA-Z0-9 -]{1,7}";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
     HashMap<String, ArrayList<LocalDate>> currentLicences = new HashMap<>();
     private LocalDate today = LocalDate.now();
@@ -19,26 +22,36 @@ public class VisitorParking {
     VisitorParking(){
     }
 
-    public VisitorParking(String licence, LocalDate date){
-        Matcher match = PATTERN.matcher(licence);
-        if(!match.matches() || licence.length() > 7 || date.isBefore(today))
+    public VisitorParking(String licence, LocalDate date)throws IllegalArgumentException{
+        if(date.isBefore(today))
             throw new IllegalArgumentException();
+        licence = Parking.standardizeAndValidateLicence(licence);
         currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date);
     }
 
     public VisitorParking(String licence)throws IllegalArgumentException{
-        Matcher match = PATTERN.matcher(licence);
-        if(!match.matches() || licence.length() > 7)
-            throw new IllegalArgumentException();
+        licence = Parking.standardizeAndValidateLicence(licence);
         currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(today);
     }
 
     // Setters
 
     // Getters
-    public ArrayList<String> getLicencesRegisteredForDate(){ return null; }
-    public ArrayList<String> getLicencesRegisteredForDate(LocalDate commonDate){
-        return null;
+    public ArrayList<String> getLicencesRegisteredForDate(){ 
+        ArrayList<String> licences = new ArrayList<>();
+        for(String key:currentLicences.keySet())
+            for(LocalDate checkDate:currentLicences.get(key))
+                if(checkDate == today)
+                    licences.add(key);
+        return licences; 
+    }
+    public ArrayList<String> getLicencesRegisteredForDate(LocalDate date){
+        ArrayList<String> licences = new ArrayList<>();
+        for(String key:currentLicences.keySet())
+            for(LocalDate checkDate:currentLicences.get(key))
+                if(checkDate == date)
+                    licences.add(key);
+        return licences; 
     }
 
     public ArrayList<LocalDate> getAllDaysLicenceIsRegistered(String licence){
@@ -46,7 +59,12 @@ public class VisitorParking {
     }
 
     public ArrayList<LocalDate> getStartDaysLicenceIsRegistered(String licence){
-        return null;
+        ArrayList<LocalDate> startDates = new ArrayList<>();
+        for(int i = 0; i < currentLicences.get(licence).size(); i += 3){
+            startDates.add(currentLicences.get(licence).get(i));
+        }
+        Collections.sort(startDates);
+        return startDates;
     }
 
     // Methods
@@ -54,10 +72,10 @@ public class VisitorParking {
         addVisitorReservation(licence, today);
     }
     
-    public void addVisitorReservation(String licence, LocalDate date) {
-        Matcher match = PATTERN.matcher(licence);
-        ArrayList<LocalDate> datesForKey;
-        if(!match.matches() || licence.length() > 7 || date.isBefore(today))
+    public void addVisitorReservation(String licence, LocalDate date) throws IllegalArgumentException{
+        licence = Parking.standardizeAndValidateLicence(licence);
+        int numReservations = 0;
+        if(date.isBefore(today))
             throw new IllegalArgumentException();
         if(currentLicences.get(licence) == null){
             currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date);
@@ -65,20 +83,28 @@ public class VisitorParking {
             currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date.plusDays(2));
             return;
         }
-        datesForKey = currentLicences.get(licence);
-        for(LocalDate checkDate:datesForKey){
+        for(LocalDate checkDate:currentLicences.get(licence)){
             if(date.isBefore(checkDate) && date.plusDays(2).isAfter(checkDate))
                 throw new IllegalArgumentException();
                 
         }
+        for(String key:currentLicences.keySet())
+            for(LocalDate checkDate:currentLicences.get(key))
+                if(date == checkDate)
+                    numReservations ++;
+        System.out.println(numReservations);
+        if(numReservations > 2)
+            throw new IllegalArgumentException();
         currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date); 
+        currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date.plusDays(1));
+        currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date.plusDays(2));
     }
 
     public boolean licenceIsRegisteredForDate(String licence, LocalDate date) {
-        return false;
+        return currentLicences.get(licence).contains(date);
     }
 
     public boolean licenceIsRegisteredForDate(String licence) {
-        return false;
+        return currentLicences.get(licence).contains(today);
     }
 }
