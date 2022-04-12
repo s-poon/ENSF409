@@ -12,6 +12,7 @@ public class HouseholdParking extends CalgaryProperty {
     // Each residental property is allowed one street parking permit
     private LinkedList<String> residentLicence = new LinkedList<String>();
     private int maxLicences = 3;
+    private VisitorParking vp = new VisitorParking();
 
     public HouseholdParking(int taxRollNumber, String zoning, String streetName, int buildingNumber, String postCode, String buildingAnnex) throws IllegalArgumentException {
         super(taxRollNumber,zoning,streetName,buildingNumber,postCode,buildingAnnex);
@@ -86,43 +87,46 @@ public class HouseholdParking extends CalgaryProperty {
      * Get all the licences stored for the resident
      * @return An array containing the resident's licences
     */
-    public String[] getResidentLicence() {
+    public String getResidentLicence() {
+   //actual code
        String result[] = this.residentLicence.toArray(new String[maxLicences]);
-       return result;
+       	String newResult = new String();
+       	int i = 0;
+       	while(result[i]!= null) {
+       		newResult =  result[i];
+       		i++;
+       	}
+       	return newResult;
     }
 
     public VisitorParking getVisitors() {
-        return null;
+    	return vp;
     }
-
     public void addVisitorReservation(String licence) {
+    	vp.addVisitorReservation(licence);
     }
-
     public void addVisitorReservation(String licence, LocalDate date1) {
+    	vp.addVisitorReservation(licence, date1);
     }
-
     public ArrayList<String> getLicencesRegisteredForDate(LocalDate commonDate) {
-        return null;
+    	return vp.getLicencesRegisteredForDate(commonDate);
     }
-
-    public Object getStartDaysLicenceIsRegistered(String licence3) {
-        return null;
-    }
-
-    public Object getAllDaysLicenceIsRegistered(String licence1) {
-        return null;
-    }
-
-    public boolean licenceIsRegisteredForDate(String licence1, LocalDate date1) {
-        return false;
-    }
-
-    public boolean licenceIsRegisteredForDate(String licence3) {
-        return false;
-    }
-
     public ArrayList<String> getLicencesRegisteredForDate() {
-        return null;
+    	return vp.getLicencesRegisteredForDate();
+    }
+    public boolean licenceIsRegisteredForDate(String licence) {
+    	return vp.licenceIsRegisteredForDate(licence);
+    }
+    public boolean licenceIsRegisteredForDate(String licence, LocalDate date) {
+    	return vp.licenceIsRegisteredForDate(licence, date);
+    }
+    public String getAllDaysLicenceIsRegistered(String licence) {
+    	return vp.getAllDaysLicenceIsRegistered(licence).toString();
+    }
+    public String getStartDaysLicenceIsRegistered(String licence) {
+    	return vp.getStartDaysLicenceIsRegistered(licence).toString();
+    	
     }
 
 }
+
