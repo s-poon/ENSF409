@@ -49,7 +49,7 @@ public class VisitorParking {
     }
 
     public ArrayList<LocalDate> getAllDaysLicenceIsRegistered(String licence){
-        return currentLicences.get(licence).sort();
+        return currentLicences.get(licence);
     }
 
     public ArrayList<LocalDate> getStartDaysLicenceIsRegistered(String licence){
