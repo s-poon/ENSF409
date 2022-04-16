@@ -2,25 +2,19 @@ package edu.ucalgary.ensf409;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.regex.*;
 
-import javax.lang.model.util.ElementScanner6;
+
 
 
 public class VisitorParking {
     // Member Variables
-    private static final String REGEX = "[a-zA-Z0-9 -]{1,7}";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
     HashMap<String, ArrayList<LocalDate>> currentLicences = new HashMap<>();
     private LocalDate today = LocalDate.now();
 
     // Constructors
-    VisitorParking(){
-    }
+    VisitorParking(){}
 
     public VisitorParking(String licence, LocalDate date)throws IllegalArgumentException{
         if(date.isBefore(today))
@@ -55,7 +49,7 @@ public class VisitorParking {
     }
 
     public ArrayList<LocalDate> getAllDaysLicenceIsRegistered(String licence){
-        return currentLicences.get(licence);
+        return currentLicences.get(licence).sort();
     }
 
     public ArrayList<LocalDate> getStartDaysLicenceIsRegistered(String licence){
@@ -86,14 +80,13 @@ public class VisitorParking {
         for(LocalDate checkDate:currentLicences.get(licence)){
             if(date.isBefore(checkDate) && date.plusDays(2).isAfter(checkDate))
                 throw new IllegalArgumentException();
-                
         }
+
         for(String key:currentLicences.keySet())
             for(LocalDate checkDate:currentLicences.get(key))
-                if(date == checkDate)
+                if(checkDate == date)
                     numReservations ++;
-        System.out.println(numReservations);
-        if(numReservations > 2)
+        if(numReservations > 1)
             throw new IllegalArgumentException();
         currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date); 
         currentLicences.computeIfAbsent(licence, k -> new ArrayList<>()).add(date.plusDays(1));
@@ -101,6 +94,12 @@ public class VisitorParking {
     }
 
     public boolean licenceIsRegisteredForDate(String licence, LocalDate date) {
+        try{
+            currentLicences.get(licence).contains(date);
+        }catch(NullPointerException e){
+            return false;
+        }
+        
         return currentLicences.get(licence).contains(date);
     }
 
